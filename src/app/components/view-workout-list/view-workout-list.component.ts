@@ -58,14 +58,17 @@ export class ViewWorkoutListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {
-    if (this.workoutService.isLocalStorageAvailable()) {
-      const users: UserWorkoutData[] = this.workoutService.getUserData();
-      this.dataSource = new MatTableDataSource(users);
-    }
-  }
+  constructor() {}
 
   ngOnInit(): void {
+    if (this.workoutService.isLocalStorageAvailable()) {
+      let users: UserWorkoutData[];
+      this.workoutService.workouts$.subscribe((workout) => {
+        users = workout;
+        this.dataSource = new MatTableDataSource(users);
+      });
+    }
+
     this.dataSource.filterPredicate = (
       data: UserWorkoutData,
       filter: string

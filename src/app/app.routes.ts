@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AddWorkoutComponent } from './components/add-workout/add-workout.component';
 import { ViewWorkoutListComponent } from './components/view-workout-list/view-workout-list.component';
-import { WorkoutChartAnalysisComponent } from './components/workout-chart-analysis/workout-chart-analysis.component';
+// import { WorkoutChartAnalysisComponent } from './components/workout-chart-analysis/workout-chart-analysis.component';
 
 export const routes: Routes = [
   {
@@ -17,8 +17,8 @@ export const routes: Routes = [
     path: 'viewWorkout',
     component: ViewWorkoutListComponent,
   },
-  {
-    path: 'viewChart',
-    component: WorkoutChartAnalysisComponent,
-  },
+  // {
+  //   path: 'viewChart',
+  //   component: WorkoutChartAnalysisComponent,
+  // },
 ];

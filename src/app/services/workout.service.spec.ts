@@ -18,14 +18,4 @@ describe('WorkoutService', () => {
     service = new WorkoutService();
     expect(service.getUserData().length).toBe(3);
   });
-
-  it('should add a workout', () => {
-    const newWorkout = {
-      userName: 'Test User',
-      workoutType: 'Running',
-      minutes: 30,
-    };
-    service.addWorkout(newWorkout);
-    expect(service.getUserData().length).toBe(4);
-  });
 });

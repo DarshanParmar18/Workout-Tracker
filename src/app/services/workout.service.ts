@@ -1,15 +1,24 @@
 import { Injectable } from '@angular/core';
-import { UserWorkoutData } from '../model/User-workout-data.model';
+import { UserWorkoutData, Workout } from '../model/User-workout-data.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WorkoutService {
+  localStorageKey = 'userData';
+  private workoutsSubject = new BehaviorSubject<UserWorkoutData[]>(this.getUserData());
+  workouts$ = this.workoutsSubject.asObservable();
+
   workoutTypes = ['Running', 'Cycling', 'Swimming', 'Weight Lifting'];
 
   constructor() {
-    if (this.isLocalStorageAvailable() && !localStorage.getItem('userData')) {
+    if (
+      this.isLocalStorageAvailable() &&
+      !localStorage.getItem(this.localStorageKey)
+    ) {
       this.initialData();
+      this.workoutsSubject.next(this.getUserData());
     }
     // else {
     //   console.log('localStorage is not available');
@@ -44,11 +53,21 @@ export class WorkoutService {
         ],
       },
     ];
-    localStorage?.setItem('userData', JSON.stringify(initialUserData));
+    localStorage?.setItem(
+      this.localStorageKey,
+      JSON.stringify(initialUserData)
+    );
   }
 
   getUserData(): UserWorkoutData[] {
-    return JSON.parse(localStorage?.getItem('userData') || '[]');
+    return JSON.parse(localStorage?.getItem(this.localStorageKey) || '[]');
+  }
+
+  addWorkout(newWorkout: UserWorkoutData) {
+    const workout = this.getUserData();
+    workout.push(newWorkout);
+    this.workoutsSubject.next(workout);
+    localStorage?.setItem(this.localStorageKey, JSON.stringify(workout));
   }
 
   isLocalStorageAvailable(): boolean {

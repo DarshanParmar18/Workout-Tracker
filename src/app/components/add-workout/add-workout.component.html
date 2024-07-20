@@ -1,13 +1,46 @@
 <div class="mx-16">
-  <form class="example-form my-6">
+  <form class="example-form my-6" (ngSubmit)="onAddWorkout()">
     <mat-form-field class="m-2">
-      <mat-label>Username</mat-label>
-      <input matInput name="userName" required />
+      <mat-label>User Name</mat-label>
+      <input matInput name="name" [(ngModel)]="name" required />
     </mat-form-field>
     <div>
-      <mat-form-field class="m-2">
-        <mat-label>Filter by Workout Type</mat-label>
-        <mat-select required>
+      <div *ngFor="let workout of workouts; let i = index">
+        <mat-form-field class="m-2">
+          <mat-label>Workout Type</mat-label>
+          <mat-select
+            name="workoutType{{ i }}"
+            [(ngModel)]="workout.type"
+            required
+          >
+            <mat-option *ngFor="let type of WorkoutTypes" [value]="type">{{
+              type
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="m-2">
+          <mat-label>Workout Minutes</mat-label>
+          <input
+            matInput
+            type="number"
+            name="minutes{{ i }}"
+            [(ngModel)]="workout.minutes"
+            required
+          />
+        </mat-form-field>
+        <div class="mb-6 w-8/12 flex justify-between">
+          <button mat-raised-button type="button" (click)="removeWorkout(i)">
+            Remove
+          </button>
+          <button mat-raised-button type="button" (click)="addWorkoutField()">
+            Add
+          </button>
+        </div>
+      </div>
+
+      <!-- <mat-form-field class="m-2">
+        <mat-label>Workout Type</mat-label>
+        <mat-select name="workoutType" [(ngModel)]="workoutType" required>
           @for(type of WorkoutTypes; track type){
           <mat-option [value]="type">{{ type }}</mat-option>
           }
@@ -15,10 +48,16 @@
       </mat-form-field>
       <mat-form-field class="m-2">
         <mat-label>Workout Minutes</mat-label>
-        <input matInput type="number" name="minutes" required />
-      </mat-form-field>
+        <input
+          matInput
+          type="number"
+          name="minutes"
+          [(ngModel)]="minutes"
+          required
+        />
+      </mat-form-field> -->
     </div>
-    <button mat-raised-button>Add Workout</button>
+    <button mat-raised-button type="submit">Add Workout</button>
   </form>
 
   <app-view-workout-list></app-view-workout-list>
