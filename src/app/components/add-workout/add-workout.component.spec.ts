@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AddWorkoutComponent } from './add-workout.component';
 
@@ -8,9 +9,8 @@ describe('AddWorkoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddWorkoutComponent]
-    })
-    .compileComponents();
+      imports: [AddWorkoutComponent, BrowserAnimationsModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddWorkoutComponent);
     component = fixture.componentInstance;

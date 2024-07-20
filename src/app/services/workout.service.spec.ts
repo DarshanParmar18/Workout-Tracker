@@ -13,6 +13,7 @@ describe('WorkoutService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
   it('should initialize with data', () => {
     localStorage.clear();
     service = new WorkoutService();
